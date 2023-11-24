@@ -30,9 +30,8 @@ load_dotenv(find_dotenv())
 
 # UPDATE secret key
 # SECURITY WARNING: keep the secret key used in production secret!
-if 'SECRET_KEY' in os.environ:
-    SECRET_KEY = os.environ['SECRET_KEY']
 
+SECRET_KEY = 'django-insecure-_0-k=vs6+az**r$9g_1#28xvs^dqi-!h)a)bbin$_f3esvioqc'
 #######################################
 #       ALLOWED HOSTS / DEBUG
 #######################################
@@ -133,15 +132,17 @@ TEMPLATES = [
 
 #######################################
 #           DATABASES
-#######################################  
+#######################################
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 # https://dev.to/mdrhmn/deploying-react-django-app-using-heroku-2gfa
 
 WSGI_APPLICATION = 'gym.wsgi.application'
 
 DATABASES = {
-    'default':
-        dj_database_url.config()
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 #######################################
@@ -167,7 +168,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 #######################################
 #       Internationalization
-####################################### 
+#######################################
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
@@ -201,8 +202,8 @@ SIMPLE_JWT = {
     'UPDATE_LAST_LOGIN': False,
 
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': os.environ['SIGNING_KEY'],
-    # 'SIGNING_KEY': os.getenv('SIGNING_KEY'),
+    # 'SIGNING_KEY': os.environ['SIGNING_KEY'],
+    'SIGNING_KEY': os.getenv('SIGNING_KEY'),
     'VERIFYING_KEY': None,
     'AUDIENCE': None,
     'ISSUER': None,
@@ -253,7 +254,7 @@ MEDIA_URL = "/media/"
 
 if platform.system() == "Darwin" or IS_HEROKU:
     STATICFILES_DIRS = [
-          os.path.join(BASE_DIR, 'build/static'),
+        os.path.join(BASE_DIR, 'build/static'),
     ]
 else:
     STATICFILES_DIRS = [
